@@ -11,3 +11,123 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+body,
+html {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #929d9e !important;
+}
+
+
+.App {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: #929d9e;
+  color: #333;
+  font-family: 'PT Sans', sans-serif;
+}
+
+.app-header{
+  text-align: center;
+  color: #16519f;
+}
+
+.container{
+  min-height: 40vh;
+  display: flex;
+  flex-flow: column wrap
+}
+
+nav{
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: row;
+  height: 44px;
+  background: #adc9d1;
+  color: rgb(0, 0, 0);
+  font-size: 1.5rem;
+  /* border-radius: 15px 15px 0px 0px; */
+}
+
+nav a {
+  color: #FFF;
+  font-weight: bold;
+  text-decoration: none;
+  /* padding: 20px; */
+  display: inline-block;
+}
+.friend-profile{
+  min-height: 40vh;
+  display: flex;
+  align-items: center;
+}
+.friend-profile div{
+  margin: 0 auto;
+
+}
+h3{
+  width: 100%
+}
+.friend-list-container{
+  margin: 4rem auto;
+  background-color: #f7f7f7;
+  width: 70vw;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.315);
+
+}
+.input-location{
+  width: 95%;
+}
+
+
+.friend-list{
+  display: flex;
+  justify-content: space-between;
+  flex-flow: row wrap;
+  padding: 1rem;
+  margin: 1rem auto;
+  width: 63vw;
+}
+
+.title{
+  width: 100%;
+  font-size: 4rem;
+  color: #16519f;
+  text-align: center;
+  padding-bottom: 14px;
+  padding-top: 14px;
+
+}
+
+.friend-card{
+  padding: 2.5rem;
+  margin: 1rem auto;
+  background-color: #adc9d1;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.24);
+  color: black;
+  width: 14vw;
+}
+
+#login-container {
+  font-size: 1rem;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  width: 350px;
+  background: #fff;
+  margin-top: 12px;
+  padding: .8rem;
+  height: 250px;
+  margin: auto;
+}
+
+#login-form {
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+}
