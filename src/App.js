@@ -4,7 +4,6 @@ import Login from './components/Login';
 import PrivateRoute from './components/PrivateRoute';
 import Friends from './components/Friends';
 import NavBar from './components/NavBar';
-import MapContainer from './components/MapContainer';
 import Container from '@material-ui/core/Container';
 
 function App() {
@@ -16,9 +15,6 @@ function App() {
         <NavBar />
         <h1 class='app-header'>Route Management System</h1>
         <Container className='container' maxWidth="md">
-
-         <MapContainer />
-
 
           <Route
               exact 

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Loader from 'react-loader-spinner';
 import { withRouter } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
-
+import MapContainer from './MapContainer';
 import { getData } from '../actions';
 import FriendCard from './FriendCard';
 
@@ -14,7 +14,10 @@ class Friends extends React.Component {
 
   render() {
     return (
-    <div>            
+    <div>
+      
+      <MapContainer />
+
     
     {this.props.fetchingData ? (
                 <div className="key spinner">
