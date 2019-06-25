@@ -16,6 +16,7 @@ const store = createStore(reducer, composeEnhancers(applyMiddleware(thunk)));
 const rootElement = document.getElementById('root');
 ReactDOM.render(
   <Provider store={store}>
+    <div className='donotcross' />
     <App />
   </Provider>,
   rootElement

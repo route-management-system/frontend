@@ -8,7 +8,8 @@ import Container from '@material-ui/core/Container';
 
 function App() {
   return (
-    <Router lassName="App">
+    <Router className="App">
+      
 
       <div className='friend-list-container'>
 

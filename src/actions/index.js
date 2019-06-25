@@ -1,7 +1,4 @@
 import axios from 'axios';
-import {geolocated} from 'react-geolocated';
-
-
 import { axiosWithAuth } from '../utils/axiosWithAuth';
 
 export const LOGIN_START = 'LOGIN_START';
@@ -25,9 +22,8 @@ export const FETCH_DATA_FAILURE = 'FETCH_DATA_FAILURE';
 export const getData = () => dispatch => {
   dispatch({ type: FETCH_DATA_START });
   axiosWithAuth()
-    .get('/friends')
+    .get('/traffic')
     .then(res => {
-      console.log(res)
       dispatch({ type: FETCH_DATA_SUCCESS, payload: res.data });
     })
     .catch(err => {
@@ -43,7 +39,6 @@ export const getLocation = () => dispatch => {
   dispatch({ type: GET_LOCATION_START });
   const geolocation = navigator.geolocation;
   geolocation.getCurrentPosition((position) => {
-      console.log(position.coords);
       dispatch({
           type: GET_LOCATION_SUCCESS,
           payload: position.coords

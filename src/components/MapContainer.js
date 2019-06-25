@@ -4,6 +4,8 @@ import GoogleMap from './GoogleMap';
 import SearchBox from './SearchBox';
 import Loader from 'react-loader-spinner';
 import { getLocation } from '../actions';
+import axios from 'axios';
+
 
 class MapContainer extends Component {
   constructor(props) {
@@ -18,7 +20,18 @@ class MapContainer extends Component {
   }
   componentDidMount() {
     this.props.getLocation();
+    this.apiTst();
   }
+
+  apiTst = () => {
+    axios.get('https://route-management-system.herokuapp.com/')
+    .then(res => {
+      console.log(res.data)
+    })
+    .catch(err => {
+      console.log(err.response);
+    });
+};
 
   apiHasLoaded = (map, maps) => {
     this.setState({
@@ -36,11 +49,12 @@ class MapContainer extends Component {
     const {
       places, mapApiLoaded, mapInstance, mapApi,
     } = this.state;
+    
 
     return (
 
-      <div style={{width: '65vw', height: '500px'}}>
-    {mapApiLoaded && <SearchBox map={mapInstance} mapApi={mapApi} addplace={this.addPlace} />}
+      <div style={{width: '50vw', height: '500px'}}>
+    {mapApiLoaded && <SearchBox map={mapInstance} mapApi={mapApi} addplace={this.addPlace} /> }
 
     {this.props.gettingLocation ? 
                 <div className="key spinner">
@@ -48,7 +62,7 @@ class MapContainer extends Component {
                   <p>Loading Data</p>
                 </div>
        : ( 
-         
+
         <GoogleMap
           defaultZoom={10}
           defaultCenter={{lat: this.props.location.latitude, lng: this.props.location.longitude}}
@@ -71,7 +85,7 @@ const mapStateToProps = ({location, gettingLocation}) => {
     return {
       location,
       gettingLocation,
-      getLocation: () => getLocation(),      
+      getLocation: () => getLocation(),
       };
   };
 

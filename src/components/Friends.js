@@ -28,8 +28,8 @@ class Friends extends React.Component {
         <>
             <Grid container className='friend-list' spacing={4}>
             <h3>Accidents Nearby</h3>
-            {this.props.friends.map(f => (
-                <FriendCard key={f.id} friend={f} />
+            {this.props.traffic.map(i => (
+                <FriendCard key={i.id} incident={i} />
             ))}
             </Grid>
             
@@ -40,9 +40,9 @@ class Friends extends React.Component {
   }
 }
 
-const mapStateToProps = ({ error, friends, fetchingData }) => ({
+const mapStateToProps = ({ error, traffic, fetchingData }) => ({
   error,
-  friends,
+  traffic,
   fetchingData
 });
 

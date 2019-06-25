@@ -34,17 +34,14 @@ const FriendCard = props => {
   const classes = useStyles();
 
     return(
-  <Grid item key={props.friend} xs={12} sm={6} md={4}>
+  <Grid item key={props.id} xs={12} sm={6} md={4}>
     <Card className={classes.card}>
       <CardContent>
         <Typography variant="h5" component="h2">
-            {props.friend.name}
+            {props.incident.type}
         </Typography>
         <Typography variant="body2" component="p">
-            {props.friend.age}
-            <br />
-                {props.friend.email}
-            <br />
+            {props.incident.address}
         </Typography>
       </CardContent>
     </Card>

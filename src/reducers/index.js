@@ -14,7 +14,8 @@ import {
     error: '',
     fetchingData: false,
     loggingIn: false,
-    friends: [], 
+    friends: [],
+    traffic: [],
     gettingLocation: true,
     location: {
       latitude: 0,
@@ -64,7 +65,7 @@ import {
         return {
           ...state,
           fetchingData: false,
-          friends: action.payload
+          traffic: action.payload
         };
       case FETCH_DATA_FAILURE:
         return {
