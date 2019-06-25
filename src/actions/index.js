@@ -1,19 +1,23 @@
-import axios from 'axios';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
 
 export const LOGIN_START = 'LOGIN_START';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const login = creds => dispatch => {
+  console.log(creds)
   dispatch({ type: LOGIN_START });
   return axiosWithAuth()
-    .post('/login', creds)
+    .post('/users/login', creds)
     .then(res => {
-      localStorage.setItem('token', res.data.payload);
-      dispatch({ type: LOGIN_SUCCESS });
+      dispatch({ type: LOGIN_SUCCESS, payload: res.data });
       return true;
     })
     .catch(err => console.log(err.response));
+};
+
+export const LOGOUT = 'LOGOUT'
+export const logout = () => dispatch => {
+  dispatch({ type: LOGOUT });
 };
 
 export const FETCH_DATA_START = 'FETCH_DATA_START';

@@ -9,7 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import { Link } from 'react-router-dom';
 
 
-const FriendCard = props => {
+const IncidentCard = props => {
   const useStyles = makeStyles({
     card: {
       minWidth: 275,
@@ -53,4 +53,4 @@ const FriendCard = props => {
     )
 }
 
-export default FriendCard
+export default IncidentCard

@@ -18,7 +18,7 @@ class Login extends React.Component {
     headerText: 'Login to RMS to View Your Saved Routes',
     btnText: 'Log in',
     altAction: 'Or Create Account'
-    
+
   };
 
   handleChange = e => {
@@ -30,7 +30,6 @@ class Login extends React.Component {
     });
   };
   toggleLogin = e => {
-
 
     this.setState({
       headerText: 'Create An Account to Save Your Routes',
@@ -44,6 +43,7 @@ class Login extends React.Component {
     e.preventDefault();
     this.props.login(this.state.credentials).then(res => {
       if (res) {
+        console.log(res)
         this.props.history.push('/protected');
       }
     });
@@ -88,7 +88,7 @@ class Login extends React.Component {
               variant="outlined"
               onChange={this.handleChange}
             />
-          <Button outlined style = {{backgroundColor: '#f29021', color: 'white'}} >
+          <Button outlined onClick={this.login} style = {{backgroundColor: '#f29021', color: 'white'}} >
             {this.props.loggingIn ? (
               <Loader type="ThreeDots" color="#1f2a38" height="12" width="26" />
             ) : (

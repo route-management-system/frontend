@@ -5,9 +5,9 @@ import { withRouter } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import MapContainer from './MapContainer';
 import { getData } from '../actions';
-import FriendCard from './FriendCard';
+import IncidentCard from './IncidentCard';
 
-class Friends extends React.Component {
+class AppContainer extends React.Component {
   componentDidMount() {
     this.props.getData();
   }
@@ -15,21 +15,25 @@ class Friends extends React.Component {
   render() {
     return (
     <div>
-      
-      <MapContainer />
 
+      <MapContainer />
     
-    {this.props.fetchingData ? (
-                <div className="key spinner">
-                  <Loader type="Puff" color="#204963" height="60" width="60" />
-                  <p>Loading Data</p>
-                </div>
+      {this.props.fetchingData ? (
+        <div className="key spinner">
+          <Loader
+              type="Puff" 
+              color="#204963" 
+              height="60" 
+              width="60" 
+          />
+          <p>Loading Data</p>
+        </div>
       ) : ( 
         <>
-            <Grid container className='friend-list' spacing={4}>
+            <Grid container className='incident-list' spacing={4}>
             <h3>Accidents Nearby</h3>
             {this.props.traffic.map(i => (
-                <FriendCard key={i.id} incident={i} />
+                <IncidentCard key={i.id} incident={i} />
             ))}
             </Grid>
             
@@ -50,5 +54,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     { getData }
-  )(Friends)
+  )(AppContainer)
 );

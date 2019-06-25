@@ -7,13 +7,16 @@ import {
     FETCH_DATA_FAILURE,
     GET_LOCATION_START,
     GET_LOCATION_SUCCESS,
-    GET_LOCATION_FAILURE
+    GET_LOCATION_FAILURE, 
+    LOGOUT
   } from '../actions';
   
   const initialState = {
     error: '',
     fetchingData: false,
     loggingIn: false,
+    loggedIn: false,
+    message: '',
     friends: [],
     traffic: [],
     gettingLocation: true,
@@ -40,8 +43,6 @@ import {
           location: {longitude: action.payload.longitude, latitude: action.payload.latitude}
         };
 
-
-
       case LOGIN_START:
         return {
           ...state,
@@ -49,11 +50,25 @@ import {
           loggingIn: true
         };
       case LOGIN_SUCCESS:
+        console.log(action.payload)
+        localStorage.setItem('token', action.payload.token);
+        localStorage.setItem('message', action.payload.message);
         return {
           ...state,
           loggingIn: false,
-          error: ''
+          error: '', 
+          message: localStorage.getItem('message'),
+          loggedIn: true
         };
+
+        case LOGOUT:
+            localStorage.removeItem('token');
+            localStorage.removeItem('message');
+          return {
+            ...state,
+            loggedIn: false
+          };
+
       case FETCH_DATA_START:
         return {
           ...state,

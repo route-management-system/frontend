@@ -29,8 +29,8 @@ const NavBar = props => {
               <Tab 
                 label="My Saved Routes"
                 component={AdapterLink}
-                to={{pathname: "/login",
-                    title: 'Add a Friend' }} 
+                to={{pathname: "/protected",
+                    title: 'My Saved Routes' }} 
               />
           </Tabs>
       </AppBar>

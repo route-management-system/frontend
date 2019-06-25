@@ -98,7 +98,7 @@ h3{
   width: 95%;
 }
 
-.friend-list{
+.incident-list{
   display: flex;
   justify-content: space-between;
   flex-flow: row wrap;
