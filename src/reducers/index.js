@@ -8,7 +8,10 @@ import {
     GET_LOCATION_START,
     GET_LOCATION_SUCCESS,
     GET_LOCATION_FAILURE, 
-    LOGOUT
+    LOGOUT, 
+    NEW_USER_START,
+    NEW_USER_SUCCESS,
+    NEW_USER_FAILURE
   } from '../actions';
   
   const initialState = {
@@ -61,13 +64,29 @@ import {
           loggedIn: true
         };
 
-        case LOGOUT:
-            localStorage.removeItem('token');
-            localStorage.removeItem('message');
-          return {
-            ...state,
-            loggedIn: false
-          };
+      case NEW_USER_START:
+        return {
+          ...state,
+          error: '',
+          loggingIn: true
+        };
+
+      case NEW_USER_SUCCESS:
+        console.log(action.payload)
+        return {
+          ...state,
+          loggingIn: false,
+          error: '', 
+
+        };
+
+      case LOGOUT:
+          localStorage.removeItem('token');
+          localStorage.removeItem('message');
+        return {
+          ...state,
+          loggedIn: false
+        };
 
       case FETCH_DATA_START:
         return {

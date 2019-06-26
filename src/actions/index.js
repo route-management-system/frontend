@@ -14,6 +14,23 @@ export const login = creds => dispatch => {
     })
     .catch(err => console.log(err.response));
 };
+export const NEW_USER_START = 'NEW_USER_START';
+export const NEW_USER_SUCCESS = 'NEW_USER_SUCCESS';
+export const NEW_USER_FAILURE = 'NEW_USER_FAILURE';
+export const newUser = creds => dispatch => {
+  dispatch({ type: NEW_USER_START });
+  return axiosWithAuth()
+    .post('/users/register', creds)
+    .then(res => {
+      dispatch({ type: NEW_USER_SUCCESS, payload: res.data });
+      return true;
+    })
+    .then(
+      setTimeout(() => {dispatch(login(creds))}, 2000)
+    )
+    .catch(err => console.log(err.response));
+};
+
 
 export const LOGOUT = 'LOGOUT'
 export const logout = () => dispatch => {

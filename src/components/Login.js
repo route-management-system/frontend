@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 
 
-import { login } from '../actions';
+import { login, newUser } from '../actions';
 
 class Login extends React.Component {
   state = {
@@ -17,7 +17,8 @@ class Login extends React.Component {
     },
     headerText: 'Login to RMS to View Your Saved Routes',
     btnText: 'Log in',
-    altAction: 'Or Create Account'
+    altAction: 'Or Create Account',
+    action: 'login'
 
   };
 
@@ -30,24 +31,35 @@ class Login extends React.Component {
     });
   };
   toggleLogin = e => {
-
     this.setState({
       headerText: 'Create An Account to Save Your Routes',
       btnText: 'Create Account',
-      altAction: 'Already Have An Account?'
+      altAction: 'Already Have An Account?',
+      action: 'new-user'
     });
-
   };
 
-  login = e => {
+  handleForm = e => {
+    console.log(this.state.action)
     e.preventDefault();
-    this.props.login(this.state.credentials).then(res => {
-      if (res) {
-        console.log(res)
-        this.props.history.push('/protected');
-      }
-    });
-  };
+    const action = this.state.action
+
+    if (action == 'login'){
+      this.props.login(this.state.credentials).then(res => {
+        if (res) {
+          this.props.history.push('/protected');
+        }
+      });
+    }
+    if (action == 'new-user'){
+      console.log('new-user')
+      this.props.newUser(this.state.credentials).then(res => {
+        if (res) {
+          this.props.history.push('/protected')
+        }
+      });
+    }
+  }
 
   render() {
 
@@ -55,7 +67,7 @@ class Login extends React.Component {
 
         <Card id='login-container' body>
 
-        <form id='login-form' onSubmit={this.login}>
+        <form id='login-form' onSubmit={this.handleForm}>
 
           <h2 className='login-header'>
             {this.state.headerText}
@@ -88,7 +100,7 @@ class Login extends React.Component {
               variant="outlined"
               onChange={this.handleChange}
             />
-          <Button outlined onClick={this.login} style = {{backgroundColor: '#f29021', color: 'white'}} >
+          <Button outlined onClick={this.handleForm} style = {{backgroundColor: '#f29021', color: 'white'}} >
             {this.props.loggingIn ? (
               <Loader type="ThreeDots" color="#1f2a38" height="12" width="26" />
             ) : (
@@ -109,5 +121,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { login }
+  { login, newUser }
 )(Login);
