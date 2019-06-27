@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
+import SearchResults from './SearchResults'
+import axios from 'axios';
+const atlas = require('azure-maps-control');
+const atlasService = require('azure-maps-rest');
 
 const Wrapper = styled.div`
   position: relative;
@@ -15,19 +19,23 @@ class SearchBox extends Component {
   constructor(props) {
     super(props);
     this.clearSearchBox = this.clearSearchBox.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
     this.state = {
-      address: ''
+      address: '',
+      destination: '',
+      resultsFlag: false,
+      results: []
     }
   }
 
-  componentDidMount({ map, mapApi } = this.props) {
-    this.searchBox = new mapApi.places.SearchBox(this.searchInput);
-    this.searchBox.addListener('places_changed', this.onPlacesChanged);
-    this.searchBox.bindTo('bounds', map);
-    var geocoder = new mapApi.Geocoder;
-    var input = this.props.location
-    this.reverseGeocodeLoc(geocoder, input)
-  }
+  // componentDidMount({ map, mapApi } = this.props) {
+  //   this.searchBox = new mapApi.places.SearchBox(this.searchInput);
+  //   this.searchBox.addListener('places_changed', this.onPlacesChanged);
+  //   this.searchBox.bindTo('bounds', map);
+  //   var geocoder = new mapApi.Geocoder;
+  //   var input = this.props.location
+  //   this.reverseGeocodeLoc(geocoder, input)
+  // }
 
     reverseGeocodeLoc = (geocoder, input) => {
       var latlng = {lat: parseFloat(input.latitude), lng: parseFloat(input.longitude)};
@@ -47,9 +55,6 @@ class SearchBox extends Component {
 
     }
 
-  componentWillUnmount({ mapApi } = this.props) {
-    mapApi.event.clearInstanceListeners(this.searchInput);
-  }
 
   onPlacesChanged = ({ map, addplace } = this.props) => {
     const selected = this.searchBox.getPlaces();
@@ -66,24 +71,43 @@ class SearchBox extends Component {
     this.searchInput.blur();
   };
 
-    onChangeHandler = () => {
-      // const directionsService = new this.props.mapApi.DirectionsService;
-      // const directionsDisplay = new this.props.mapApi.DirectionsRenderer;
-      // const map = this.props.map;
-      // directionsService.route({
-      //   origin: document.getElementById('start').value,
-      //   destination: document.getElementById('end').value,
-      //   travelMode: 'DRIVING'
-      // }, function(response, status) {
-      //   if (status === 'OK') {
-      //     directionsDisplay.setDirections(response);
-      //     directionsDisplay.setMap(map);
+  onChangeHandler = e => {
+    this.setState({[e.target.name]: e.target.value});
+    let inputLength = e.target.value.length
+    if ( e.target.value.length >= 3) {
+      setTimeout( e.target.value.length == inputLength ? this.handleSearch(e.target.value) : null , 150);
+    } else {
+      let searchInputLength = e.target.value.length;
+    }
+  };
 
-      //   } else {
-      //     window.alert('Directions request failed due to ' + status);
-      //   }
-      // });
-    };
+  handleSearch = query => {
+    const map = this.props.map
+    const authOptions = {
+      authType: 'subscriptionKey',
+      subscriptionKey: 'druzvY1gFuIVmFZaZEb19x8uQ4O1Li1SeIJqfHe47Ng'
+    }
+    let datasource = new atlas.source.DataSource();
+    map.sources.add(datasource);
+    var pipeline = atlasService.MapsURL.newPipeline('druzvY1gFuIVmFZaZEb19x8uQ4O1Li1SeIJqfHe47Ng');
+    var searchURL = new atlasService.SearchURL(pipeline);
+
+
+    axios.get(`https://atlas.microsoft.com/search/poi/json?subscription-key=druzvY1gFuIVmFZaZEb19x8uQ4O1Li1SeIJqfHe47Ng&api-version=1.0&query={query}`)
+    .then(res => {
+      var data = res.data.results;
+      console.log(data)
+      this.setState({ results: data });
+      this.setState({ resultsFlag: true });
+    })
+    .catch(err => {
+      console.log(err.response);
+    });
+
+
+  }
+
+
     
   clearSearchBox() {
     // this.searchInput.value = '';
@@ -92,18 +116,6 @@ class SearchBox extends Component {
   render() {
     return (
       <>
-      {/* <div id="floating-panel">
-        <b>Start: </b>
-        <select id="start" onChange={this.onChangeHandler}>
-          <option value="san bernardino, ca">San Bernardino</option>
-          <option value="los angeles, ca">Los Angeles</option>
-        </select>
-        <b>End: </b>
-        <select id="end" onChange={this.onChangeHandler}>
-          <option value="chicago, il">Chicago</option>
-          <option value="st louis, mo">St Louis</option>
-        </select>
-        </div> */}
 
       <Wrapper>
 
@@ -124,26 +136,27 @@ class SearchBox extends Component {
             style = {{width: 400}}
           />
 
-        {/* <input
-          id='input-start'
-          ref={(ref) => {
-            this.searchInput = ref;
-          }}
-          value={this.state.address}
-          type="text"
-          onFocus={this.clearSearchBox}
-          placeholder="Start"
-        /> */}
-
         <TextField
           id='input-end'
           type="text"
+          name='destination'
+          value={this.state.destination}
           placeholder="Destination"
+          label="Destination"
           id="outlined-name"
           margin="normal"
           variant="outlined"
+          style = {{width: 400}}
+          onChange={this.onChangeHandler}
         />
       </Wrapper>
+
+      {!this.state.resultsFlag
+            ? <div></div> 
+            :<div className="results"> {this.state.results.map(r => {
+              return <SearchResults key={r.id} r={r} />
+          })}</div>
+        }
       </>
     );
   }

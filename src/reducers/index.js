@@ -11,7 +11,8 @@ import {
     LOGOUT, 
     NEW_USER_START,
     NEW_USER_SUCCESS,
-    NEW_USER_FAILURE
+    NEW_USER_FAILURE, 
+    ADMIN_CONSOLE_SUCCESS
   } from '../actions';
   
   const initialState = {
@@ -20,7 +21,7 @@ import {
     loggingIn: false,
     loggedIn: false,
     message: '',
-    friends: [],
+    users: [],
     traffic: [],
     gettingLocation: true,
     location: {
@@ -32,6 +33,14 @@ import {
   
   const reducer = (state = initialState, action) => {
     switch (action.type) {
+
+      case ADMIN_CONSOLE_SUCCESS:
+        return {
+          ...state,
+          fetchingData: false,
+          users: action.payload
+        };
+
       case GET_LOCATION_START:
         return {
           ...state,
@@ -101,6 +110,7 @@ import {
           fetchingData: false,
           traffic: action.payload
         };
+
       case FETCH_DATA_FAILURE:
         return {
           ...state,

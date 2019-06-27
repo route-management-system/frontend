@@ -40,7 +40,6 @@ class Login extends React.Component {
   };
 
   handleForm = e => {
-    console.log(this.state.action)
     e.preventDefault();
     const action = this.state.action
 

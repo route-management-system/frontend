@@ -1,11 +1,12 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import GoogleMap from './GoogleMap';
+import AzureMap from './AzureMap';
 import SearchBox from './SearchBox';
 import Loader from 'react-loader-spinner';
 import { getLocation } from '../actions';
 import axios from 'axios';
-
+const atlas = require('azure-maps-control');
 
 class MapContainer extends Component {
   constructor(props) {
@@ -20,18 +21,8 @@ class MapContainer extends Component {
   }
   componentDidMount() {
     this.props.getLocation();
-    this.apiTst();
   }
 
-  apiTst = () => {
-    axios.get('https://route-management-system.herokuapp.com/')
-    .then(res => {
-      console.log(res.data)
-    })
-    .catch(err => {
-      console.log(err.response);
-    });
-};
 
   apiHasLoaded = (map, maps) => {
     this.setState({
@@ -52,9 +43,10 @@ class MapContainer extends Component {
     
 
     return (
-
-      <div style={{width: '50vw', height: '500px'}}>
-    {mapApiLoaded && <SearchBox map={mapInstance} mapApi={mapApi} addplace={this.addPlace} /> }
+//width: '50vw',
+      <div style={{height: '500px'}}>
+    {/* {mapApiLoaded && <SearchBox map={mapInstance} mapApi={mapApi} addplace={this.addPlace} /> } */}
+  
 
     {this.props.gettingLocation ? 
                 <div className="key spinner">
@@ -63,17 +55,21 @@ class MapContainer extends Component {
                 </div>
        : ( 
 
-        <GoogleMap
-          defaultZoom={10}
-          defaultCenter={{lat: this.props.location.latitude, lng: this.props.location.longitude}}
-          bootstrapURLKeys={{
-            key: process.env.REACT_APP_MAP_KEY,
-            libraries: ['places', 'geometry'],
-          }}
-          yesIWantToUseGoogleMapApiInternals
-          onGoogleApiLoaded={({ map, maps }) => this.apiHasLoaded(map, maps)}
-        >
-        </GoogleMap>
+
+        <AzureMap />
+
+
+        // <GoogleMap
+        //   defaultZoom={10}
+        //   defaultCenter={{lat: this.props.location.latitude, lng: this.props.location.longitude}}
+        //   bootstrapURLKeys={{
+        //     key: process.env.REACT_APP_MAP_KEY,
+        //     libraries: ['places', 'geometry'],
+        //   }}
+        //   yesIWantToUseGoogleMapApiInternals
+        //   onGoogleApiLoaded={({ map, maps }) => this.apiHasLoaded(map, maps)}
+        // >
+        // </GoogleMap>
       )}
       </div>
 

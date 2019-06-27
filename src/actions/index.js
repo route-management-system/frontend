@@ -14,6 +14,25 @@ export const login = creds => dispatch => {
     })
     .catch(err => console.log(err.response));
 };
+
+export const ADMIN_CONSOLE_SUCCESS = 'ADMIN_CONSOLE_SUCCESS';
+// export const getData = () => dispatch => {
+  
+export const adminConsole = token => dispatch => {
+  console.log(token)
+  dispatch({ type: FETCH_DATA_START });
+  axiosWithAuth()
+    .get('/users', token)
+    .then(res => {
+      dispatch({ type: ADMIN_CONSOLE_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      console.log(err.response);
+      dispatch({ type: FETCH_DATA_FAILURE, payload: err.response.data.error });
+    });
+};
+
+
 export const NEW_USER_START = 'NEW_USER_START';
 export const NEW_USER_SUCCESS = 'NEW_USER_SUCCESS';
 export const NEW_USER_FAILURE = 'NEW_USER_FAILURE';
