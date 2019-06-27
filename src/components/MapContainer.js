@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import Iframe from 'react-iframe'
 import { connect } from 'react-redux';
-import GoogleMap from './GoogleMap';
 import AzureMap from './AzureMap';
 import SearchBox from './SearchBox';
 import Loader from 'react-loader-spinner';
