@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from 'react';
+import Iframe from 'react-iframe'
 import { connect } from 'react-redux';
 import GoogleMap from './GoogleMap';
 import AzureMap from './AzureMap';
@@ -6,47 +7,25 @@ import SearchBox from './SearchBox';
 import Loader from 'react-loader-spinner';
 import { getLocation } from '../actions';
 import axios from 'axios';
-const atlas = require('azure-maps-control');
+
 
 class MapContainer extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      mapApiLoaded: false,
-      mapInstance: null,
-      mapApi: null,
-      places: [],
+      places: []
     };
   }
   componentDidMount() {
     this.props.getLocation();
   }
 
-
-  apiHasLoaded = (map, maps) => {
-    this.setState({
-      mapApiLoaded: true,
-      mapInstance: map,
-      mapApi: maps,
-    });
-  };
-
-  addPlace = (place) => {
-    this.setState({ places: place });
-  };
-
   render() {
-    const {
-      places, mapApiLoaded, mapInstance, mapApi,
-    } = this.state;
-    
 
     return (
-//width: '50vw',
-      <div style={{height: '500px'}}>
-    {/* {mapApiLoaded && <SearchBox map={mapInstance} mapApi={mapApi} addplace={this.addPlace} /> } */}
-  
+
+      <div className='map-container' style={{height: '500px'}}>
 
     {this.props.gettingLocation ? 
                 <div className="key spinner">
@@ -55,22 +34,18 @@ class MapContainer extends Component {
                 </div>
        : ( 
 
-
-        <AzureMap />
-
-
-        // <GoogleMap
-        //   defaultZoom={10}
-        //   defaultCenter={{lat: this.props.location.latitude, lng: this.props.location.longitude}}
-        //   bootstrapURLKeys={{
-        //     key: process.env.REACT_APP_MAP_KEY,
-        //     libraries: ['places', 'geometry'],
-        //   }}
-        //   yesIWantToUseGoogleMapApiInternals
-        //   onGoogleApiLoaded={({ map, maps }) => this.apiHasLoaded(map, maps)}
-        // >
-        // </GoogleMap>
+        // <AzureMap />
+        
+    <Iframe url="http://localhost:8080/trafficoverlay.html"
+        width="900px"
+        height="600px"
+        id="myId"
+        className="myClassname"
+        display="initial"
+        position="relative"/>
       )}
+
+
       </div>
 
     )

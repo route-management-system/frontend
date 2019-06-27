@@ -41,7 +41,9 @@ html {
   font-size: 3.5rem;
   text-shadow: 1px 1px #3d3c39;
 }
-
+.map-container{
+  margin-bottom: 100px;
+}
 .container{
   min-height: 100vh;
   display: flex;
