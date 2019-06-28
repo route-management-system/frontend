@@ -38,10 +38,11 @@ const IncidentCard = props => {
     <Card className={classes.card}>
       <CardContent>
         <Typography variant="h5" component="h2">
-            {props.incident.type}
+            {props.incident.address}
         </Typography>
         <Typography variant="body2" component="p">
-            {props.incident.address}
+          {props.incident.id}
+            {/* {props.incident.address} */}
         </Typography>
       </CardContent>
     </Card>

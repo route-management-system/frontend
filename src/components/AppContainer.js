@@ -6,6 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import MapContainer from './MapContainer';
 import { getData } from '../actions';
 import IncidentCard from './IncidentCard';
+import SearchBox from './SearchBox';
 
 class AppContainer extends React.Component {
   componentDidMount() {
@@ -16,9 +17,14 @@ class AppContainer extends React.Component {
     return (
     <div>
 
+      {/* <SearchBox /> */}
+      <h2 className='app-header'>
+        Traffic & Construction in Your Area
+      </h2>
+      <h3>Login to Save Your Routes and Destinations</h3>
       <MapContainer />
     
-      {this.props.fetchingData ? (
+      {/* {this.props.fetchingData ? (
         <div className="key spinner">
           <Loader
               type="Puff" 
@@ -38,7 +44,7 @@ class AppContainer extends React.Component {
             </Grid>
             
         </>
-      )}
+      )} */}
       </div>
     );
   }

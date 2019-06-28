@@ -3,22 +3,36 @@ import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import Loader from 'react-loader-spinner';
 import { withRouter } from 'react-router-dom';
-import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { Link } from 'react-router-dom';
-import { adminConsole } from '../actions';
+import SearchBox from './SearchBox'
+import IncidentCard from './IncidentCard'
+import { getData } from '../actions';
+
+
 
 
 
 const SavedRoutes = props => {
 
   useEffect(() => {
-    const token = { "token": localStorage.getItem('token')}
-    props.adminConsole(token);
+    var id = localStorage.getItem('id')
+    props.getData(id);
   }, []);
+
+
+
+
+  const reverseGeocodeLoc = (geocoder, input) => {
+    var latlng = {lat: parseFloat(input.latitude), lng: parseFloat(input.longitude)};
+    // https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=YOUR_API_KEY
+
+
+
+  }
 
   const useStyles = makeStyles({
     card: {
@@ -46,9 +60,9 @@ const SavedRoutes = props => {
 
   const AdapterLink = React.forwardRef((props, ref) => <Link innerRef={ref}  {...props} />);
 
-
+  const locations = props.locations
     return(
-      <>
+      <div className='saved-routes-container'>
     <h2 className='login-header'>
         {props.message ? props.message : localStorage.getItem('message')}
     </h2>
@@ -67,21 +81,36 @@ const SavedRoutes = props => {
         </div>
       ) : ( 
         <>
-          {props.users.map(user => (
-              <div key={user.id}>
-                <span> {user.id} </span>
-                <span> {user.username} </span>
-              </div>
-          ))}
+            <Grid container className='incident-list' spacing={4}>
+              <h3>Your Saved Routes</h3>
+        
+
+
+
+
+              {props.locations.map((i, index) => (
+               <>
+                <li>{i[index].id}</li>
+                <li>{i[index].address}</li>
+                </>
+                   // <IncidentCard key={i.id} incident={i} />
+             ))} 
+            </Grid>
             
         </>
       )}
 
+
+        <SearchBox />
+
+
+
+
     </div>
 
-    <Button component={AdapterLink} to="/logout">Logout</Button>
+    <Button color="primary" component={AdapterLink} to="/logout">Logout</Button>
 
-      </>
+      </div>
 //   <Grid item key={props.id} xs={12} sm={6} md={4}>
 //     <Card className={classes.card}>
 //       <CardContent>
@@ -98,16 +127,15 @@ const SavedRoutes = props => {
     )
 }
 
-const mapStateToProps = ({ message, fetchingData, users }) => ({
+const mapStateToProps = ({ message, fetchingData, users, locations }) => ({
     message,
     fetchingData,
-    users
+    users,
+    locations,
   });
   
   export default withRouter(
     connect(
-      mapStateToProps,
-      { adminConsole }
-    )(SavedRoutes)
+      mapStateToProps, { getData } )(SavedRoutes)
   );
   

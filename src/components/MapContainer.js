@@ -33,9 +33,8 @@ class MapContainer extends Component {
                 </div>
        : ( 
 
-        // <AzureMap />
-        
-    <Iframe url="http://localhost:8080/trafficoverlay.html"
+         
+    <Iframe url='/trafficoverlay.html'
         width="900px"
         height="600px"
         id="myId"

@@ -12,17 +12,23 @@ import {
     NEW_USER_START,
     NEW_USER_SUCCESS,
     NEW_USER_FAILURE, 
-    ADMIN_CONSOLE_SUCCESS
-  } from '../actions';
+    GET_ID,
+    ADD_LOCATION,
+    ADD_LOCATION_SUCCESS
+    } from '../actions';
   
   const initialState = {
     error: '',
     fetchingData: false,
     loggingIn: false,
     loggedIn: false,
+    userName: '',
+    userID: 0,
     message: '',
     users: [],
     traffic: [],
+    locations: [{"lat": 38, "lon": 38, "address": '12424 Thompkins Drive'}],
+    newloc: '',
     gettingLocation: true,
     location: {
       latitude: 0,
@@ -30,16 +36,26 @@ import {
     }
 
   };
-  
+  // {"lat": 38, "lon": 38, "address": '12424 Thompkins Drive'}
   const reducer = (state = initialState, action) => {
     switch (action.type) {
+  
 
-      case ADMIN_CONSOLE_SUCCESS:
+      case GET_ID:
+          let user = action.payload.find(o => o.username == state.userName);
+          let id = user.id
+          localStorage.setItem('id', id);
         return {
           ...state,
-          fetchingData: false,
-          users: action.payload
+          userID: id
         };
+
+        case ADD_LOCATION_SUCCESS:
+            console.log(action.payload)
+          return {
+            ...state,
+            newloc: action.payload
+          };
 
       case GET_LOCATION_START:
         return {
@@ -59,7 +75,9 @@ import {
         return {
           ...state,
           error: '',
-          loggingIn: true
+          loggingIn: true,
+          userName: action.payload
+
         };
       case LOGIN_SUCCESS:
         console.log(action.payload)
@@ -70,7 +88,8 @@ import {
           loggingIn: false,
           error: '', 
           message: localStorage.getItem('message'),
-          loggedIn: true
+          loggedIn: true,
+          userID: 0
         };
 
       case NEW_USER_START:
@@ -108,7 +127,7 @@ import {
         return {
           ...state,
           fetchingData: false,
-          traffic: action.payload
+          locations: [...state.locations, action.payload]
         };
 
       case FETCH_DATA_FAILURE:
