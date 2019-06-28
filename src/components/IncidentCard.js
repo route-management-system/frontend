@@ -41,8 +41,11 @@ const IncidentCard = props => {
             {props.incident.address}
         </Typography>
         <Typography variant="body2" component="p">
-          <em>Approx. Travel Delay:</em> {props.incident.id}
-            {/* {props.incident.address} */}
+          <em>Approx. Travel Delay: {Math.floor(Math.random() * 60)} </em>
+          {/* {props.incident.id} */}
+        </Typography>
+        <Typography variant="body2" component="a">
+          Update
         </Typography>
       </CardContent>
     </Card>

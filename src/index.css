@@ -36,7 +36,7 @@ html {
 
 .app-header{
   text-align: center;
-  color: #f29021;
+  color: #254560;
   -webkit-text-stroke: .5px rgba(0, 0, 0, 0.603);
   font-size: 3.5rem;
   text-shadow: 1px 1px #3d3c39;
@@ -76,7 +76,7 @@ nav{
 }
 
 .MuiTabs-root{
-  background-color: #f29021;
+  background-color: #254560;
 }
 
 nav a {
@@ -167,7 +167,7 @@ h3{
 .test{
   height: 50px;
   width: 100%;
-  background-color: #f29021;
+  background-color: #254560;
   position: fixed;
   top: 0;
   z-index: 1000;

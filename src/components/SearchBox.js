@@ -54,6 +54,7 @@ class SearchBox extends Component {
         var postInfo = {"user_id": id, "lat": lat, "lon": lon, "address": address}
 
         this.props.addLocation(postInfo)
+        this.props.history.push('/protected')
         // this.props.addLocation(id, postInfo)
       })
       .catch(err => {
