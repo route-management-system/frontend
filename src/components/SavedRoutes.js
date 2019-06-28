@@ -88,12 +88,9 @@ const SavedRoutes = props => {
 
 
 
-              {props.locations.map((i, index) => (
-               <>
-                <li>{i[index].id}</li>
-                <li>{i[index].address}</li>
-                </>
-                   // <IncidentCard key={i.id} incident={i} />
+              {props.locations.map((i) => (
+   
+                   <IncidentCard key={i.id} incident={i} />
              ))} 
             </Grid>
             

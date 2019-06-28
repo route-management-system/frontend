@@ -197,6 +197,12 @@ form{
   flex-flow: column;
 }
 
-.app-header{
+.app-sub-header{
+  text-align: center;
+  font-size: 2rem;
+  color: #f29021;
+}
+
+.app-cta{
   text-align: center;
 }

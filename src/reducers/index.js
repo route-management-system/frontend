@@ -27,7 +27,7 @@ import {
     message: '',
     users: [],
     traffic: [],
-    locations: [{"lat": 38, "lon": 38, "address": '12424 Thompkins Drive'}],
+    locations: '',
     newloc: '',
     gettingLocation: true,
     location: {
@@ -127,7 +127,8 @@ import {
         return {
           ...state,
           fetchingData: false,
-          locations: [...state.locations, action.payload]
+          // locations: [...state.locations, action.payload]
+          locations: action.payload
         };
 
       case FETCH_DATA_FAILURE:

@@ -18,10 +18,10 @@ class AppContainer extends React.Component {
     <div>
 
       {/* <SearchBox /> */}
-      <h2 className='app-header'>
+      <h2 className='app-sub-header'>
         Traffic & Construction in Your Area
       </h2>
-      <h3>Login to Save Your Routes and Destinations</h3>
+      <h3 className='app-cta'>Login to Save Your Routes and Destinations</h3>
       <MapContainer />
     
       {/* {this.props.fetchingData ? (

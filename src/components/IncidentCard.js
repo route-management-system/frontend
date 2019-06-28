@@ -41,7 +41,7 @@ const IncidentCard = props => {
             {props.incident.address}
         </Typography>
         <Typography variant="body2" component="p">
-          {props.incident.id}
+          <em>Approx. Travel Delay:</em> {props.incident.id}
             {/* {props.incident.address} */}
         </Typography>
       </CardContent>
