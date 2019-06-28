@@ -7,14 +7,22 @@ import {
     FETCH_DATA_FAILURE,
     GET_LOCATION_START,
     GET_LOCATION_SUCCESS,
-    GET_LOCATION_FAILURE
+    GET_LOCATION_FAILURE, 
+    LOGOUT, 
+    NEW_USER_START,
+    NEW_USER_SUCCESS,
+    NEW_USER_FAILURE, 
+    ADMIN_CONSOLE_SUCCESS
   } from '../actions';
   
   const initialState = {
     error: '',
     fetchingData: false,
     loggingIn: false,
-    friends: [], 
+    loggedIn: false,
+    message: '',
+    users: [],
+    traffic: [],
     gettingLocation: true,
     location: {
       latitude: 0,
@@ -25,6 +33,14 @@ import {
   
   const reducer = (state = initialState, action) => {
     switch (action.type) {
+
+      case ADMIN_CONSOLE_SUCCESS:
+        return {
+          ...state,
+          fetchingData: false,
+          users: action.payload
+        };
+
       case GET_LOCATION_START:
         return {
           ...state,
@@ -39,8 +55,6 @@ import {
           location: {longitude: action.payload.longitude, latitude: action.payload.latitude}
         };
 
-
-
       case LOGIN_START:
         return {
           ...state,
@@ -48,11 +62,41 @@ import {
           loggingIn: true
         };
       case LOGIN_SUCCESS:
+        console.log(action.payload)
+        localStorage.setItem('token', action.payload.token);
+        localStorage.setItem('message', action.payload.message);
         return {
           ...state,
           loggingIn: false,
-          error: ''
+          error: '', 
+          message: localStorage.getItem('message'),
+          loggedIn: true
         };
+
+      case NEW_USER_START:
+        return {
+          ...state,
+          error: '',
+          loggingIn: true
+        };
+
+      case NEW_USER_SUCCESS:
+        console.log(action.payload)
+        return {
+          ...state,
+          loggingIn: false,
+          error: '', 
+
+        };
+
+      case LOGOUT:
+          localStorage.removeItem('token');
+          localStorage.removeItem('message');
+        return {
+          ...state,
+          loggedIn: false
+        };
+
       case FETCH_DATA_START:
         return {
           ...state,
@@ -64,8 +108,9 @@ import {
         return {
           ...state,
           fetchingData: false,
-          friends: action.payload
+          traffic: action.payload
         };
+
       case FETCH_DATA_FAILURE:
         return {
           ...state,

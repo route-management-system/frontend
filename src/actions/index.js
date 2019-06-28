@@ -1,22 +1,59 @@
-import axios from 'axios';
-import {geolocated} from 'react-geolocated';
-
-
 import { axiosWithAuth } from '../utils/axiosWithAuth';
 
 export const LOGIN_START = 'LOGIN_START';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const login = creds => dispatch => {
+  console.log(creds)
   dispatch({ type: LOGIN_START });
   return axiosWithAuth()
-    .post('/login', creds)
+    .post('/users/login', creds)
     .then(res => {
-      localStorage.setItem('token', res.data.payload);
-      dispatch({ type: LOGIN_SUCCESS });
+      dispatch({ type: LOGIN_SUCCESS, payload: res.data });
       return true;
     })
     .catch(err => console.log(err.response));
+};
+
+export const ADMIN_CONSOLE_SUCCESS = 'ADMIN_CONSOLE_SUCCESS';
+// export const getData = () => dispatch => {
+  
+export const adminConsole = token => dispatch => {
+  console.log(token)
+  dispatch({ type: FETCH_DATA_START });
+  axiosWithAuth()
+    .get('/users', token)
+    .then(res => {
+      dispatch({ type: ADMIN_CONSOLE_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      console.log(err.response);
+      dispatch({ type: FETCH_DATA_FAILURE, payload: err.response.data.error });
+    });
+};
+
+
+export const NEW_USER_START = 'NEW_USER_START';
+export const NEW_USER_SUCCESS = 'NEW_USER_SUCCESS';
+export const NEW_USER_FAILURE = 'NEW_USER_FAILURE';
+export const newUser = creds => dispatch => {
+  dispatch({ type: NEW_USER_START });
+  return axiosWithAuth()
+    .post('/users/register', creds)
+    .then(res => {
+      dispatch({ type: NEW_USER_SUCCESS, payload: res.data });
+      return true;
+    })
+    .then(
+      setTimeout(() => {dispatch(login(creds))}, 2000)
+    )
+    .catch(err => console.log(err.response));
+};
+
+
+export const LOGOUT = 'LOGOUT'
+export const logout = () => dispatch => {
+  dispatch({ type: LOGOUT });
 };
 
 export const FETCH_DATA_START = 'FETCH_DATA_START';
@@ -25,9 +62,8 @@ export const FETCH_DATA_FAILURE = 'FETCH_DATA_FAILURE';
 export const getData = () => dispatch => {
   dispatch({ type: FETCH_DATA_START });
   axiosWithAuth()
-    .get('/friends')
+    .get('/traffic')
     .then(res => {
-      console.log(res)
       dispatch({ type: FETCH_DATA_SUCCESS, payload: res.data });
     })
     .catch(err => {
@@ -43,7 +79,6 @@ export const getLocation = () => dispatch => {
   dispatch({ type: GET_LOCATION_START });
   const geolocation = navigator.geolocation;
   geolocation.getCurrentPosition((position) => {
-      console.log(position.coords);
       dispatch({
           type: GET_LOCATION_SUCCESS,
           payload: position.coords
