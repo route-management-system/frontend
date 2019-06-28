@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import { getID, addLocation } from '../actions';
-
+import { withRouter } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import SearchResults from './SearchResults';
 import axios from 'axios';
@@ -59,6 +59,7 @@ class SearchBox extends Component {
 				};
 
 				this.props.addLocation(postInfo);
+				this.props.history.push('/');
 				this.props.history.push('/protected');
 				// this.props.addLocation(id, postInfo)
 			})
@@ -165,7 +166,9 @@ const mapStateToProps = ({ location, getID, userID }) => {
 	};
 };
 
-export default connect(
-	mapStateToProps,
-	{ getID, addLocation }
-)(SearchBox);
+export default withRouter(
+	connect(
+		mapStateToProps,
+		{ getID, addLocation }
+	)(SearchBox)
+);

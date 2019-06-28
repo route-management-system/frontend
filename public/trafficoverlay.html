@@ -16,10 +16,22 @@
 
     <script type='text/javascript'>
         var map;
-        function GetMap() {
+        var centerlocation;
+        async function main(){
+            if(navigator.geolocation){
+                centerlocation = await getPosition().then(async (res) => {
+                    return await setPosition(res);
+                });
+                await GetMap(centerlocation);
+            }else{
+                centerlocation = [-122.33, 47.6];
+                await GetMap(centerlocation);
+            }
+        }
+        function GetMap(centerlocation) {
             //Initialize a map instance.
             map = new atlas.Map('myMap', {
-                center: [-122.33, 47.6],
+                center: centerlocation,
                 zoom: 12,
                 //Add your Azure Maps subscription key to the map SDK. Get an Azure Maps key at https://azure.com/maps
                 authOptions: {
@@ -34,6 +46,14 @@
                     incidents: true,
                     flow: 'absolute'
                 });
+            });
+        }
+        async function setPosition(position){
+            return [Number(Number.parseFloat(position.coords.longitude).toFixed(2)), Number(Number.parseFloat(position.coords.latitude).toFixed(2))];
+        }
+        async function getPosition() {
+            return new Promise((res, rej) => {
+                navigator.geolocation.getCurrentPosition(res, rej);
             });
         }
     </script>
@@ -51,7 +71,7 @@
         }
     </style>
 </head>
-<body onload="GetMap()">
+<body onload="main()">
     <div id="myMap"></div>
 </body>
 </html>
