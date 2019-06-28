@@ -38,10 +38,14 @@ const IncidentCard = props => {
     <Card className={classes.card}>
       <CardContent>
         <Typography variant="h5" component="h2">
-            {props.incident.type}
+            {props.incident.address}
         </Typography>
         <Typography variant="body2" component="p">
-            {props.incident.address}
+          <em>Approx. Travel Delay: {Math.floor(Math.random() * 60)} </em>
+          {/* {props.incident.id} */}
+        </Typography>
+        <Typography variant="body2" component="a">
+          Update
         </Typography>
       </CardContent>
     </Card>

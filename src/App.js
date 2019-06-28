@@ -7,21 +7,38 @@ import NavBar from './components/NavBar';
 import SavedRoutes from './components/SavedRoutes';
 import LogoutPage from './components/LogoutPage';
 import Container from '@material-ui/core/Container';
+import { StickyContainer, Sticky } from 'react-sticky';
+
 
 function App() {
+  let renderCount = 0;
   return (
     <Router className="App">
-      
-      <div className='friend-list-container'>
+     
+        
+        
+      <div className='test'>
+        <div className='logo'></div>
 
+      </div>
+
+
+
+      {/* <div className='friend-list-container'> */}
+
+          
+      <div 
+          className='app-container'
+        >
         <NavBar />
 
+        
         <h1 class='app-header'>
           Route Management System
         </h1>
 
         <Container 
-          className='container' 
+          className='container'
           maxWidth="md"
         >
 
@@ -48,7 +65,8 @@ function App() {
             />
 
           </Container>
-        </div>
+          </div>
+        {/* </div> */}
     </Router>
   );
 }
